@@ -9,7 +9,6 @@ import scalajsbundler.{BundlerFile, NpmDependencies, Webpack, WebpackDevServer}
 import scalajsbundler.ExternalCommand.addPackages
 import scalajsbundler.util.{JSON, ScalaJSNativeLibraries}
 
-
 /**
   * This plugin enables `ScalaJSPlugin` and sets the `scalaJSModuleKind` to `CommonJSModule`. It also makes it
   * possible to define dependencies to NPM packages and provides tasks to fetch them or to bundle the application

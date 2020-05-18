@@ -92,31 +92,6 @@ object Webpack {
         if (emitSourceMaps) {
           val webpackNpmPackage = NpmPackage.getForModule(webpackConfigFile.targetDir.toFile, "webpack")
           webpackNpmPackage.flatMap(_.major) match {
-            case Some(1) =>
-              Seq(
-                "devtool" -> JS.str("source-map"),
-                "module" -> JS.obj(
-                  "preLoaders" -> JS.arr(
-                    JS.obj(
-                      "test" -> JS.regex("\\.js$"),
-                      "loader" -> JS.str("source-map-loader")
-                    )
-                  )
-                )
-              )
-            case Some(2) =>
-              Seq(
-                "devtool" -> JS.str("source-map"),
-                "module" -> JS.obj(
-                  "rules" -> JS.arr(
-                    JS.obj(
-                      "test" -> JS.regex("\\.js$"),
-                      "enforce" -> JS.str("pre"),
-                      "loader" -> JS.str("source-map-loader")
-                    )
-                  )
-                )
-              )
             case Some(3) =>
               Seq(
                 "devtool" -> JS.str("source-map"),
