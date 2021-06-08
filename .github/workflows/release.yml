@@ -8,20 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: olafurpg/setup-scala@v10
+      - uses: olafurpg/setup-scala@v11
       - uses: olafurpg/setup-gpg@v3
-      - name: Cache dependencies
-        uses: actions/cache@v1
-        with:
-          path: ~/.cache/coursier/v1
-          key: ${{ runner.os }}-coursier-${{ hashFiles('build.sbt') }}-${{ hashFiles('project/*.scala') }}
-          restore-keys: ${{ runner.os }}-coursier-
-      - name: Cache .sbt
-        uses: actions/cache@v1
-        with:
-          path: ~/.sbt
-          key: ${{ runner.os }}-sbt-${{ hashFiles('build.sbt') }}-${{ hashFiles('project/*.scala') }}
-          restore-keys: ${{ runner.os }}-sbt-
+      - uses: coursier/cache-action@v5
       - name: Publish
         run: sbt clean ci-release
         env:
@@ -29,4 +18,7 @@ jobs:
           PGP_SECRET: ${{ secrets.PGP_SECRET }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          CI_RELEASE: "; scalajs-bundler-linker/publishSigned; sbt-scalajs-bundler/publishSigned; sbt-web-scalajs-bundler/publishSigned"
+          CI_SNAPSHOT_RELEASE: "; scalajs-bundler-linker/publish; sbt-scalajs-bundler/publish; sbt-web-scalajs-bundler/publish"
+
 
